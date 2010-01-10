@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" py:layout="load('../layout.html')">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Wiki</title>
+        <script type="text/javascript" src="/res/fckeditor/fckeditor.js">
+        </script>
+        <script type="text/javascript">
+        
+		window.onload = function(){
+            var oFCKeditor = new FCKeditor('body')
+            oFCKeditor.BasePath = '/res/fckeditor/'
+            // oFCKeditor.ToolbarSet = "Basic"
+            oFCKeditor.Height = "600"
+            oFCKeditor.Config['FullPage'] = true
+            oFCKeditor.ReplaceTextarea()
+        }
+		
+        </script>
+    </head>
+    <body>
+        <form action="commit" method="post" target="_blank">
+            <div>
+                <input type="text" name="title" value="$c.entry.title" />
+            </div>
+            <div style="height: 600px">
+                <textarea name="body" rows="10" cols="80" py:content="c.entry.body">
+                </textarea>
+            </div>
+            <br/>
+            <input type="submit" value="submit" />
+        </form>
+    </body>
+</html>

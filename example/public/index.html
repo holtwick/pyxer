@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html py:layout="load('layout.html')">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Home</title>
+  </head>
+  <body>
+    <h1>Pyxer Examples</h1>
+    <p>
+      You are running <a href="http://code.google.com/p/pyxer/">Pyxer ${c.pyxerversion}</a>
+      on <a py:if="c.ispaster" href="http://pythonpaste.org/">Paster</a>
+      <a py:if="c.isgae" href="http://code.google.com/appengine/">Google App Engine (on stage? ${repr(h.stage)})</a>
+      (Platform: $c.platform)
+    </p>
+    <ul>
+      <li py:for="name, link, description in c.samples"><a href="$link">$name</a>
+        <div py:if="description"> $description </div>
+      </li>
+    </ul>
+    <h2>Environment Variables</h2>
+    <pre py:content='c.env'>
+        
+    </pre>
+  </body>
+</html>

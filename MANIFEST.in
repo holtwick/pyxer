@@ -1,0 +1,12 @@
+global-exclude *.bat *.odt *.bak *.pyc .svn* *.pyo *.ttf sitecustomize.py
+exclude TODO.txt
+exclude setup_version.py
+exclude VERSION.txt
+exclude example/res.zip
+exclude example/private/*
+exclude example/public/sling/*
+exclude example/public/test/*
+exclude misc/*
+exclude docs/*
+exclude docs/style/*
+

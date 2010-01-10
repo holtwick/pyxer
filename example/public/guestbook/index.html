@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" py:layout="load('../layout.html')">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Guestbook</title>
+</head>
+<body>
+<form action="commit">
+  Leave your message:
+  <input type="message" value="" name="message" size="40" />
+</form>
+<hr />
+<ol>
+  <li py:for="entry in c.messages" py:content="entry.message" />
+</ol>
+</body>
+</html>

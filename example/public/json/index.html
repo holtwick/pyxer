@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" py:layout="load('../layout.html')">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Session</title>
+<script type="text/javascript" src="/res/js/prototype.js"></script>
+<script type="text/javascript" src="/res/js/effects.js"></script>
+<script type="text/javascript">
+window.onload = function() {
+	$$('sqrt').focus()
+	$$('sqrt').onkeyup = function() {
+		var value = $$F('sqrt')
+		new Ajax.Request(
+			'calc', {
+				method: 'GET',
+				encoding: "utf-8",
+				asynchronous: true,
+				evalJSON: true,
+				parameters: {
+					value: value
+				},
+				onSuccess: function(response) {
+					data = response.responseJSON
+					// if(data.success) {
+						$$('result').update(data.result)
+						$$('result').highlight()
+					// } else alert(data.result)
+				}
+			})
+	}
+}
+</script>
+</head>
+<body>
+<h1>
+  JSON Demo</h1>
+  <form action="">
+	<p>sqrt(<input type="text" size="3" value="" name="sqrt" id="sqrt" />) =  <span id="result">?</span> </p>
+  </form>
+</body>
+</html>

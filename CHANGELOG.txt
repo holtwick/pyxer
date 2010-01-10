@@ -1,0 +1,138 @@
+CHANGELOG
+=========
+
+Version 0.7.3, 2009-07-xxxx
+
+- xxxx
+
+Version 0.7.2, 2009-07-20
+
+- NEW: Boolean values in templates will be shown as '0' and '1'
+- NEW: XML template and rendering support
+- NEW: Added 'xwsgi' command for direct starting in WSGI engine mode
+- FIX: XML is not served if a controller with the same name is present
+- FIX: Routing for Router object on 'public.__init__' did not work as expected
+
+Version 0.7.1, 2009-05-30
+
+- NEW: Command 'zipinstall'; Install packages as ZIP. This is usually not a
+       good idea because of performance issues on GAE but sometimes useful to
+       bypass the 1000 file limit
+- NEW: Command 'push_empty'; Creates an empty project with version '0' that can
+       be used to easyly turn off a website 
+- NEW: On GAE you can test if you are on production system by value of variable
+       'stage' or in templates with '$h.stage'
+- NEW: Templates are no cached if on stage; great performance increase
+- NEW: New option '-f' to force creation of new pyxer-app.py 
+- UPD: pyxer-app.py will not be overwritten any more if exists; added hint how 
+       to add custom middleware
+- UPD: Better error messages if command line tools fail       
+- UPD: Command 'push' replaces 'upload', command are oriented at Mercurial naming
+- UPD: Full control over response object if controller return 'response' object
+- UPD: Default engine is now GAE
+- UPD: Updated default app.yaml to not upload *.so, *.dll and _speedup* because
+       otherwise simplejson would not work if accidentialy installed in site-packages
+- UPD: Default expiration time added to app.yaml
+- FIX: pyxer-app.py always did reinitialize the WSGI app
+
+Version 0.7.0, 2009-05-18
+
+- NEW: Make Pyxer independent form virtualenv and appengine monkey
+- NEW: Command 'install'
+
+Version 0.6.3, 2009-03-29
+
+- NEW: Added favicon.ico and robots.txt to example
+- UPD: Added some examples to the app.yaml template
+
+Version 0.6.2, 2009-02-06
+
+- NEW: Support for reCaptcha
+- NEW: New option "-U" which updates pyxer for the virtual environment
+- NEW: New option "-c" to clear datastore on start of GAE
+- NEW: Little helper for time zone specific strftime
+- NEW: Function render(template=XXX) can now be called directly from controller
+- UPD: GAE now always shows emails in log
+- UPD: More documentation
+- UPD: Removed "-u" option
+- UPD: Default host is 0.0.0.0 now
+- UPD: Redirect now uses code 303 "See other" by default, location can be
+       empty then the current path is used which results in a kind of reload
+- UPD: GAE demo on pyxer.appspot.com is working again
+- FIX: The template unit test did fail
+- FIX: url() dropped query data from URL
+- FIX: Beaker sessions now working again on GAE
+
+Version 0.6.1, 2009-01-08
+
+- UPD: Updated to latest SVN version of appmonkey
+- UPD: Modified app.yaml
+- FIX: Bug in paste-deplay about "import site"
+
+Version 0.6.0, 2008-10-05
+
+- NEW: New templating language based on Genshi
+- NEW: Support for CSS selectors in templating language
+- NEW: Additional controller type '@expose'
+- NEW: Special method 'default' for handling all
+- NEW: Basic config file support, global variable "config"
+- NEW: Support for database usage
+- NEW: Routing
+- UPD: Documentation updated
+- UPD: Extended testing
+- UPD: app.yaml skip_files optimized
+- BUG: Many small fixes
+- DEL: pyxer.kid removed, general cleanup
+- DEL: BeautifulSoup based templating language removed
+
+Version 0.5.1, 2008-08-15
+
+- NEW: Added Kid to Pyxer under "pyxer.kid."
+- UPD: Cleanup of controller definitions
+- UPD: Documentation
+
+Version 0.5.0, 2008-08-04
+
+- Initial version of Pyxer framework
+
+*** BREAK ***
+
+    SWITCHED TO FRAMEWORK DEVELOPMENT INSTEAD OF
+    PYTHON TO JAVASCRIPT CONVERSION.
+
+*** BREAK ***
+
+Version 0.4, 2008-05-xx
+
+- NEW: Samples for usage with CherryPy
+- NEW: Sample for usage with Pylons
+- NEW: Write Python code on the server side and use on client side
+- NEW: Javascript helpers "pylib" can now be served as own file
+- NEW: Created a first Unit test based on prototype.js
+- UPD: Cleanup of resulting Javascript code
+- BUG: Too many Python objects where exported with callbacks
+- BUG: Error if no Python script section was defined
+
+Version 0.3, 2008-03-23
+
+- NEW: Switched to WSGI and implemented a PyxerMiddleware
+- NEW: No additional packages are needed any more.
+  WSGI part only works with Python 2.5 for the moment
+- NEW: Support for EGG
+- UPD: Moved the demo files in a subdirectory "demo"
+- BUG: In the demo the window.onload function was called "onload"
+  and therefore just worked in Firefox
+
+Version 0.2, 2008-03-07
+
+- Switched from simplejson to json (integrated into package)
+- Wrapped result of callback in a dictionary
+- Added exception handling for callback, returns { pyxer_error: "xyz" }
+  if failed to complete request
+- Added interface and example for TurboGears
+- Python logging added, named "ho.pyxer" and "ho.lib.py2js"
+- Started documentation
+
+Version 0.1, 2008-03-05
+
+- Initial release

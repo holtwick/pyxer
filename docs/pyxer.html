@@ -1,0 +1,795 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Pyxer Documentation</title>
+    <link href="pdf.css" type="text/css" rel="stylesheet" media="pdf" />
+    <!-- link href="screen.css" type="text/css" rel="stylesheet" media="screen" / -->
+    <link href="style/edgewall.css" type="text/css" rel="stylesheet" media="screen" />
+    <script type="text/javascript" src="prototype.js"></script>
+    <script type="text/javascript">
+    window.onload = function(){
+        var toc = '<ul class="auto-toc simple">'
+        var depth = 0
+        var counter = 1
+        /*
+         var h1 = document.getElementsByTagName("h1")
+         for(var i=0; i<h1.length; ++i) {
+         var e = h1[i]
+         console.info("h1", e.innerHTML)
+         while(e = e.nextSibling) {
+         if(e.nodeType==1) {
+         var tag = e.tagName.toLowerCase()
+         if(tag == "h1" || tag == "<h1>") {
+         break
+         }
+         if(tag == "h2" || tag == "<h2>") {
+         console.info("  h2", e.innerHTML)
+         }
+         }
+         }
+         }
+         */
+        $$(".section").each(function(e){
+            e.select('h1').each(function(e1){
+                var newtoc = ""
+                toc += '<li><a class="reference" href="#id' + (counter) + '">' + e1.innerHTML + '</a></li>'
+                e1.insert('<a name="id' + counter + '" id="id' + counter + '></a>', {
+                    position: "before"
+                })
+                ++counter;
+                e.select('h2').each(function(e2){
+                    newtoc += '<li><a class="reference" href="#id' + (counter) + '">&nbsp;&nbsp;&nbsp;' + e2.innerHTML + '</a></li>'
+                    e2.insert('<a name="id' + counter + '" id="id' + counter + '></a>', {
+                        position: "before"
+                    })
+                    ++counter;
+                })
+                if (newtoc.length > 0) {
+                    toc += '<ul class="auto-toc">' + newtoc + '</ul>'
+                }
+            })
+        })
+        toc += '</ul>'
+        $('autotoc').replace(toc)
+        $$('pre').each(function(e){
+            e.wrap('div', {
+                'class': 'highlight'
+            })
+        })
+    }
+    </script>
+    <style type="text/css" media="screen">
+    .pdf {
+      display: none;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="pdf">
+      <div id="footer-number">
+        <p align="right">
+          Page<pdf:pagenumber/>
+        </p>
+      </div>
+      <div id="footer-pisa">
+        <p>
+          Generated using the <a href="http://www.htmltopdf.org/">Pisa HTML2PDF Converter</a>
+        </p>
+      </div>
+      <p class="title">
+        <em>Pyxer<!--VERSION-->0.7.3<!--VERSION--></em>
+      </p>
+      <p class="subtitle"> Yet another Python Framework </p>
+      <p>
+        (C)opyright by Dirk Holtwick, Germany 
+        <br/>
+        <a href="mailto:dirk.holtwick@gmail.com">dirk.holtwick@gmail.com</a>
+        <br/>
+        <a href="http://www.pyxer.net/">http://www.pyxer.net</a>
+      </p>
+      <pdf:nexttemplate name="regular"/><!-- h1 style="-pdf-outline: false;" class="pdf">Table of Contents</h1>
+      <div class="pdf">
+      <pdf:toc />
+      </div -->
+    </div>
+    <div class="document" id="genshi-templating-basics">
+      <div id="navcontainer">
+        <div id="navigation">
+          <span class="projinfo">Pyxer<!--VERSION-->0.7.3<!--VERSION--></span>
+          <a href="#">&nbsp;</a>
+        </div>
+        <h1 class="title">Pyxer Python Framework</h1>
+        <div class="contents topic">
+          <p class="topic-title first">
+            <a id="contents" name="contents">Contents</a>
+          </p>
+          <div id="autotoc"></div>
+        </div>
+      </div>
+      <div class="section">
+        <h1>Introduction</h1>
+        <p>
+          The Pyxer Server is a very simple <a href="http://www.python.org/" target="_blank">Python</a>
+          Web Framework that aims
+          to makes starting a new project as easy as it can be. It still works
+          respecting the MVC concept but the files can be mixed in one 
+          directory. For a high end solution you should  maybe consider using <a href="http://pylonshq.com/" target="_blank">Pylons</a>,<a href="http://www.djangoproject.com/" target="_blank">Django</a>, <a href="http://turbogears.org/" target="_blank">TurboGears</a>
+          and similar. 
+        </p>
+        <p>
+          This work is inspired by <a href="http://pythonpaste.org/webob/do-it-yourself.html">http://pythonpaste.org/webob/do-it-yourself.html</a>. 
+        </p>
+        <h3>Technical background</h3>
+        <p>
+          The <a href="http://code.google.com/appengine/" target="_blank">Google App Engine  (GAE)</a>
+          in version 1.1 offers a very restricted Python environment and the developer as to ship arround a lot of limitations. Pyxer helps on this point by  providing solutions that also work together with the <a href="http://pythonpaste.org/">WSGI Framework Paste</a>
+          by Ian Bicking. This way you get the best from both sides: GAE and Paste. To achieve this, some other common third party tools are used like <a href="http://pythonpaste.org/webob/" target="_blank">WebOb</a>
+          and <a href="http://pypi.python.org/pypi/virtualenv" target="_blank">VirtualEnv</a>
+          also by Ian Bicking. The templating s based on <a href="http://genshi.edgewall.org/" target="_blank">Genshi</a>.
+        </p>
+      </div>
+      <div class="section">
+        <h1>Installation</h1>
+        <p>
+          Install Pyxer using 
+          <code>easy_install</code>
+          from <a href="http://pypi.python.org/pypi/setuptools" target="_blank">SetupTools</a>: 
+        </p>
+        <pre><em>$</em> easy_install pyxer  </pre>
+        <p>
+          All required packages (
+          <code>webob</code>, 
+          <code>html5lib</code>, 
+          <code>beaker</code>) should be installed automatically if needed. 
+        </p>
+        <p> If you want to use Google App Engine you have to install it separately. </p>
+      </div>
+      <div class="section">
+        <h1>Quick tutorial </h1>
+        <h3>Create a new project </h3>
+        <p>At first set up a new Pyxer project using the Pyxer command line tool like this: </p>
+        <pre><em>$</em>  pyxer init myexample</pre>
+        <p>
+          In the newly created directory 
+          <code>myexample</code>
+          you will find a directory structure like the following (on Windows 
+          <code>bin</code>
+          will be called 
+          <code>Scripts</code>): 
+        </p>
+        <pre>bin/
+public/
+lib/</pre>
+        <p>
+          Place your files in the 
+          <code>public</code>
+          directory. 
+        </p>
+        <h3>Start the server </h3>
+        <p>To start the server you may choose between the Paster-Engine:</p>
+        <pre><em>$</em> xpaster serve</pre>
+        <p>Or the GAE-Engine:</p>
+        <pre><em>$</em> xgae serve  </pre>
+        <p>Or use Pyxer command line tool again to use the default engine (which is WSGI from Python standard lib):</p>
+        <pre><em>$</em> pyxer serve </pre>
+        <p> But you may also use Pyxer without using the command line tools e.g. like this:</p>
+        <pre><em>$</em> paster serve development.ini </pre>
+        <h3>&quot;Hello World&quot;</h3>
+        <p>
+          For a simple &quot;Hello World&quot; just put an 
+          <code>index.html</code>
+          file into the 
+          <code>public</code>
+          directory with the following content: 
+        </p>
+        <pre>Hello World</pre>
+        <p>
+          This works just like a static server. To use a controller put the file 
+          <code>__init__.py</code>
+          into the same directory with the following
+          content:
+        </p>
+        <pre name="code" class="python">@controller
+def index():
+    return &quot;Hello World&quot;</pre>
+        <h2>Controllers</h2>
+        <p>
+          Controller, templates and static files are placed in the same 
+          directory (usually 
+          <code>public</code>). First <em>Pyxer</em>
+          looks for a matching controller. A controller is defined in the 
+          <code>__init__.py</code>
+          file and decorated by using 
+          <code>@controller</code>
+          which is defined in 
+          <code>pyxer.base</code>.
+        </p>
+        <pre><strong>from pyxer.base import *</strong>
+
+<strong>@controller</strong>
+def index():
+    return &quot;Hello World&quot;</pre>
+        <h3>@expose</h3>
+        <p>
+          This controller adds the 
+          <code>GET</code>
+          and 
+          <code>POST</code>
+          parameters as arguments to the function call (like in CherryPy):
+        </p>
+        <pre><strong>from pyxer.base import *</strong>
+
+<strong>@expose</strong>
+def index(name=&quot;unknown&quot;):
+    return &quot;Your name is &quot; + name </pre>
+        <h3>default()</h3>
+        <p>
+          If no matching controller can be found the one named 
+          <code>default</code>
+          will be called:
+        </p>
+        <pre><strong>from pyxer.base import *</strong>
+
+<strong>@controller</strong>
+def default():
+    return &quot;This is path: &quot; + request.path</pre>
+        <h2>Templates </h2>
+        <p>
+          This example can be called via 
+          <code>/</code>
+          or 
+          <code>/index</code>. 
+          To use a Pyxer template with this file you may use the 
+          <code>render()</code>
+          function or just return 
+          <code>None</code>
+          (that is the same as 
+          not using 
+          <code>return</code>) and the matching template will be used, in this 
+          case 
+          <code>index.html</code>. The available objects in the template 
+          are the same as used by Pylons: 
+          <code>c</code>
+          = context, 
+          <code>g</code>
+          = globals and 
+          <code>h</code>
+          = helpers. 
+        </p>
+        <pre>from pyxer.base import *
+
+@controller
+def index():
+    <strong>c.title = &quot;Hello World&quot;</strong></pre>
+        <p>
+          By default a Genshi like templating language is used and output is specified as 
+          <code>xhtml-strict</code>. You may want to change that for certain documents e.g. to render a plain text:
+        </p>
+        <pre>from pyxer.base import *
+
+@controller(<strong>output="plain"</strong>)
+def index():
+    c.title = &quot;Hello World&quot;</pre>
+        <p>Or use another template:</p>
+        <pre>from pyxer.base import *
+
+@controller(<strong>template="test.html"</strong>, output="html")
+def index():
+    c.title = &quot;Hello World&quot;</pre>
+        <p>Or use your own renderer:</p>
+        <pre>from pyxer.base import *
+
+<strong>def myrender():
+    result = request.result
+    return "The result is: " + repr(result)</strong>
+
+@controller(<strong>render=myrender</strong>)
+def index():
+    return 9 + 9 </pre>
+        <h2>JSON</h2>
+        <p>To return data as JSON just return a dict or list object from your controller:</p>
+        <pre>from pyxer.base import *<br /><br />@controller <br />def index(): <strong><br />   return dict(success=True, msg=&quot;Everything ok&quot;)</strong></pre>
+        <h2>Sessions </h2>
+        <p>
+          Session are realized  using the <a href="http://beaker.groovie.org/" target="_blank">Beaker</a>
+          package. You can use the variable 
+          <code>session</code>
+          to set and get values. To store the session data use 
+          <code>session.save()</code>. Here is a simple example of a counter: 
+        </p>
+        <pre>from pyxer.base import *
+<br />@controller<br />def index():<br />    c.ctr = session.get(&quot;ctr&quot;, 0)<br />    session[&quot;ctr&quot;] = c.ctr + 1<br />    session.save()</pre>
+        <p>??? XXX </p>
+        <ol>
+          <li>
+            <p>#Looks for a controller 
+              (foo.bar:bar) </p>
+            <ol>
+              <li>
+                <p>If the controller returns a 
+                  dictionary this will be applied to template (step 2) </p>
+              </li>
+            </ol>
+          </li>
+          <li>Looks for the template (foo/bar.html) </li>
+        </ol>
+        <h2>Deployment</h2>
+        <p>
+          To publish your project to GAE you may also use the Pyxer command line tool. First check if your 
+          <code>app.yaml</code>
+          file contains the right informations like the project name and version infos. Then just do like this:
+        </p>
+        <pre><em>$</em> xgae upload</pre>
+        <p>
+          Be aware that Pyxer first needs to fix the paths to be relative instead of absolute to make them work on the GAE environment. If you choose not to use Pyxer for uploading you have to do this fix up explicitly <strong>before</strong>
+          you upload your application like this:
+        </p>
+        <pre><em>$</em> xgae fix </pre>
+      </div>
+      <div class="section">
+        <h1>Routing</h1>
+        <p>
+          The routing in Pyxer is based on some conventions by default but can be extended in a very flexible and easy way. By default all public project data is expected to be found in the folder 
+          <code>public</code>. If you just put static content there  it will behave like you expect it from a normal webserver. 
+        </p>
+        <p>
+          To add controllers to it, start by creating the 
+          <code>__init__.py</code>
+          file. This makes the folder become a Python package and Pyxer routing will at first evaluate this one before looking for static content. 
+        </p>
+        <h2>Default behaviour </h2>
+        <p>The easiest controller looks like this:</p>
+        <pre>@controller
+def index():
+    return &quot;Hello World&quot;</pre>
+        <p>This will be called with the following URLs:</p>
+        <ul>
+          <li>
+            <code>http://&lt;domain&gt;/</code>
+          </li>
+          <li>
+            <code>http://&lt;domain&gt;/index</code>
+          </li>
+          <li>
+            <code>http://&lt;domain&gt;/index.html</code>
+          </li>
+          <li>
+            <code>http://&lt;domain&gt;/index.htm</code>
+          </li>
+        </ul>
+        <p>
+          If the controller has another name as 
+          <code>index</code>, these corresponding URLs will match:
+        </p>
+        <ul>
+          <li>
+            <code>http://&lt;domain&gt;/&lt;controller&gt;    </code>
+          </li>
+          <li>
+            <code>http://&lt;domain&gt;/&lt;controller&gt;.html </code>
+          </li>
+          <li>
+            <code>http://&lt;domain&gt;/&lt;controller&gt;.htm</code>
+          </li>
+        </ul>
+        <p>
+          There is one other special controller named 
+          <code>default</code>. If this one exists all non matching request will be passed to this controller. 
+        </p>
+        <p>
+          If you have sub packages in your 
+          <code>public</code>
+          folder like 
+          <code>foo</code>
+          and 
+          <code>foo.bar</code>, these will be matched by the corresponding path and in this package the rules described before will apply:
+        </p>
+        <ul>
+          <li>
+            <code>http://&lt;domain&gt;/foo/bar/...</code>
+          </li>
+        </ul>
+        <p>Everything that does not match will be considered static content. Pyxer tries to match the path relatively to the last matched package.</p>
+        <h2>Custom routes </h2>
+        <p>
+          If you need more sophisticated routing or want to include external packages that are not placed under the 
+          <code>public</code>
+          folder you may add your own routing. This is as simple as adding this line to your global space of your module:
+        </p>
+        <pre>router = Router()</pre>
+        <p>
+          <strong>Important! The name of this object has to be 
+            <code>router</code>
+            by convention!
+          </strong>
+        </p>
+        <p>To add your own ...   </p>
+        <pre>router.add(&quot;content-{name}&quot;, &quot;content&quot;)</pre>
+        <p>
+          This matches all URL starting with 
+          <code>content-</code>
+          while the rest will be saved in 
+          <code>req.urlvars</code>
+          as key called 
+          <code>name</code>. For example the URL 
+          <code>/content-myentry</code>
+          will result in a call of the controller 
+          <code>content</code>
+          where 
+          <code>req.urlvars[&quot;name&quot;]==&quot;myentry&quot;</code>.
+        </p>
+        <p>
+          For more complicated routes you may also use the 
+          <code>add_re</code>
+          method, which offers more flexibility. Here is an example that matches the rest of the path after &quot;content/&quot; and passes the value to the controller via 
+          <code>req.urlvars[&quot;path&quot;]</code>: 
+        </p>
+        <pre>router.add_re(&quot;^content/(?P&lt;path&gt;.*?)$&quot;,
+  controller=&quot;index&quot;, name=&quot;_content&quot;)</pre>
+        <h2>Relative URL</h2>
+        <p>
+          In your templates you should try to often use the 
+          <code>h.url()</code>
+          helper. It calculates a URL relative to the matched routes base. For example if we take a look at the 
+          <code>add_re</code>
+          routing example we can see that the 
+          <code>path</code>
+          component is under the content component. Let's say we have a controller called 
+          <code>edit</code>
+          we like to call from the page created by 
+          <code>index</code>, then we can not write it like this:
+        </p>
+        <pre>&lt;a href=&quot;edit?path=$c.path&quot;&gt;Edit&lt;/a&gt;</pre>
+        <p>
+          That does not always work because this page could have been called via 
+          <code>index?path=xyz</code>
+          or via 
+          <code>content/xyz</code>. To make sure we are get the correct URL corresponding to our modules controller we could write it like this:
+        </p>
+        <pre>&lt;a href=&quot;${h.url('edit?path=' + c.path)}&gt;Edit&lt;/a&gt;</pre>
+        <p>
+          Or even better using the feature of 
+          <code>h.url</code>
+          that   lets you append GET parameters as named arguments of the helper function:
+        </p>
+        <pre>&lt;a href=&quot;${h.url('edit', path=c.path)}&gt;Edit&lt;/a&gt;</pre>
+        <p>
+          If you use 
+          <code>redirect</code>
+          it will call the 
+          <code>url</code>
+          helper too so that relative parts will be translated to absolute ones.
+        </p>
+      </div>
+      <div class="section">
+        <h1>Templating</h1>
+        <p>
+          Pyxer offers yet another templating language that is very close to<a href="http://genshi.edgewall.org/" target="_blank">Genshi</a>
+          and <a href="http://pypi.python.org/pypi/kid">Kid</a>. Beause Genshi did not work with Google App Engine when <em>Pyxer</em>
+          was started, the new templating tools have been 
+          implemented. 
+        </p>
+        <h2>Variables and expressions</h2>
+        <p>
+          The default templating works similar to most known other 
+          templating languages. Variables and expressions are realized like 
+          <code>$&lt;varname&gt;</code>
+          (where 
+          <code>&lt;varname&gt;</code>
+          may 
+          contain dots!) and 
+          <code>${&lt;expression&gt;}</code>:
+        </p>
+        <pre>Hello <strong>${name.capitalize()}</strong>, you won <strong>$price</strong>.
+<strong>$item.amount</strong> times <strong>$item.name</strong>.</pre>
+        <h2>Commands</h2>
+        <p>These are also known form  templating languages like Genshi and Kid.
+          They are used like this:</p>
+        <pre>&lt;div <strong>py:if=&rdquo;name.startswith('tom ')&rdquo;</strong>&gt;Welcome $name&lt;/div&gt;</pre>
+        <p> Or this: </p>
+        <pre>&lt;div <strong>py:for=&rdquo;name in sorted(c.listOfNames)&rdquo;</strong>&gt;Welcome $name&lt;/div&gt;</pre>
+        <p>These are the available commands. They behave like the Genshi equivalents: </p>
+        <ul>
+          <li>
+          py:if 
+          <del>... py:else ... py:elif</del>
+          <li>py:for 
+            <del>... py:else</del>
+          </li>
+          <li>py:def</li>
+          <li>py:match</li>
+          <li>py:layout 
+            <del> / py:extends</del>
+          </li>
+          <li>
+            <del>py:with</del>
+          </li>
+          <li>py:content</li>
+          <li>py:replace</li>
+          <li>py:strip</li>
+          <li>py:attrs</li>
+        </ul>
+        <h2>Comments</h2>
+        <p>If HTML comments start with &quot;!&quot; they are ignored for output:</p>
+        <pre>&lt;!--! Invisible --&gt; &lt;!-- Visible in browsers --&gt; </pre>
+        <h2>Layout templates</h2>
+        <p>
+          The implementation of layout templates is quite easy. Place the 
+          <code>py:layout</code>
+          command in the 
+          <code>&lt;html&gt;</code>
+          tag and pass a Template object. For loading you can use the convenience function 
+          <code>load()</code>. 
+        </p>
+        <pre>&lt;html py:layout=&quot;load('layout.html')&quot;&gt;
+  ...
+&lt;/html&gt;</pre>
+        <p>
+          In the template file you can then access the original template stream with the global variable 
+          <code>top</code>. Use CSS selection or XPATH to access elements. Example: 
+        </p>
+        <pre>&lt;html&gt;
+  &lt;title py:content=&quot;top.css('title')&quot;&gt;&lt;/title&gt;
+  &lt;body&gt;
+    &lt;h1&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;
+        / ${top.select('//title/text()')}&lt;/h1&gt;
+    &lt;div class=&quot;content&quot;&gt;	 <br />      ${top.css('body *')}
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+        <p>
+          <strong>XPath</strong>
+        </p>
+        <p>XPath is supported like it is in Genshi.</p>
+        <p>
+          <strong>CSS Selectors</strong>
+        </p>
+        <p>
+          CSS Selectors ending with 
+          <code>&nbsp;*</code>
+          (notice the space) return just the inner texts and elements of the matched pattern. 
+        </p>
+      </div>
+      <div class="section">
+        <h1>Databases</h1>
+        <p>
+          You are free to use any database model you like. For GAE you do not have much choice. But for other engines I recommend using <a href="http://elixir.ematia.de" target="_blank">Elixir</a>. You should try to separate your controller stuff from your database stuff by creating a Python module called 
+          <code>model.py</code>. For a GAE project this may look like this:
+        </p>
+        <pre>from google.appengine.ext import db
+from google.appengine.api import users
+
+class GuestBook(db.Model):
+   name = db.StringProperty()
+   date = db.DateTimeProperty(auto_now_add=True)</pre>
+        <p>While using Elixir you can start like this:</p>
+        <pre>xxx</pre>
+        <p>XXX See the GuestBook example for a complete demo. </p>
+      </div>
+      <div class="section">
+        <h1>Advanced</h1>
+        <h3>Python virtual environment </h3>
+        <p>
+          To make deployment of GAE projects easy a virtual environment (VM) is created. If you start GAE via 
+          <code>xgae</code>
+          or paster via 
+          <code>xpaster</code>
+          these virtual environments will automatically be used. Pyxer determines the root of the VM by looking for the 
+          <code>app.yaml</code>
+          file. If you have to enter the VM for installing packages or for other reasons you may do it like this:
+        </p>
+        <pre><em>$</em> pyxer vm
+<em>(vm)$</em> easy_install html5lib
+<em>(vm)$</em> exit</pre>
+        <p>
+          You can also use the usual functions as described in <a href="http://pypi.python.org/pypi/virtualenv/">virtualenv</a>
+          by Ian Bicking. 
+        </p>
+        <pre><em>$</em> Scripts\activate.bat<br /><em>$</em> easy_install SomePackageName
+<em>$</em> deactivate</pre>
+        <p>And for other Unix like system like this:</p>
+        <pre><em>$</em> source bin/activate
+<em>$</em> easy_install SomePackageName
+<em>$</em> deactivate</pre>
+        <h3>Development of Pyxer under GAE </h3>
+        <p>
+          If you  decide to develop Pyxer you may run into the following problem: each project comes with an own virtual machine (VM) and its own installation of Pyxer in it. So if you change the development version it will have no effect on your installation. Therefore a command 
+          <code>pyxer</code>
+          is added that synchronizes the Pyxer installation in the VM with the development version:
+        </p>
+        <pre><em>$</em> pyxer pyxer  </pre>
+        <p>BTW: To install the development version using SetupTools do like this:</p>
+        <pre><em>$</em> cd &lt;Path_to_development_version_of_Pyxer&gt;
+<em>$</em> python setup.py develop</pre>
+        <p>You will have to repeat this each time the version of Pyxer changes, because otherwise the command line tools do not work. </p>
+        <h3>Writing test cases </h3>
+        <p>
+          Since a Pyxer project is based on Paster, writing test cases is quite the same. The most simple test looks like this. (We asume that the test file to will be placed in the root of the project. For normal testing you have do add the root directory, where 
+          <code>app.yaml</code>
+          is placed, to 
+          <code>sys.path</code>
+          and modify the 
+          <code>loadapp</code>
+          argument.):
+        </p>
+        <pre>
+from paste.deploy import loadapp
+from paste.fixture import TestApp
+import os.path
+
+app = TestApp(loadapp('config:%s' % os.path.abspath('development.ini')))
+res = app.get("/")
+assert ('&lt;body' in res)
+</pre>
+        <p>
+          For more informations about testing look here <a href="http://pythonpaste.org/testing-applications.html">http://pythonpaste.org/testing-applications.html</a>. 
+        </p>
+        <h3>Use within Eclipse</h3>
+        <p>xxx</p>
+        <h3>Use Google App Engine Launcher on Mac OS</h3>
+        <p>xxx </p>
+        <h3>Pyxer on Apache</h3>
+        <p>
+          If you have installed 
+          <code>mod_python</code>
+          the deployment of your project is as simple as writing the following five lines. Just copy them to your sites configuration and adjust the absolute path to the 
+          <code>development.ini</code>: 
+        </p>
+        <pre>&lt;Location &quot;/&quot;&gt;<br />  SetHandler python-program<br />  PythonHandler paste.modpython<br />  PythonOption paste.ini /&lt;absolute_path_to_ini_file&gt;/development.ini<br />&lt;/Location&gt;</pre>
+        <h3>Configuration</h3>
+        <p>
+          Pyxer configuration is placed in the configuration file used by Paster or GAE respectively 
+          <code>development.ini</code>
+          or 
+          <code>gae.ini</code>. If both are not available Pyxer looks into 
+          <code>pyxer.ini</code>. Example: 
+        </p>
+        <pre>[pyxer]
+session = beaker </pre>
+      </div>
+      <div class="section">
+        <h1>Engines</h1>
+        <p>XXX</p>
+        <p>
+          <em>Pyxer</em>
+          uses support different so called &quot;engines&quot;
+          to publish a project. Most of them need own configurations and a well
+          prepare environment to work fine. These are very specific to each of 
+          these engines and <em>Pyxer</em>
+          tries to make the setup as easy as
+          possible
+        </p>
+        <p>Common options:</p>
+        <ul>
+          <li>
+            <code>--host=HOST</code>
+            (default: 127.0.0.1) 
+          </li>
+          <li>
+            <code>--port=PORT</code>
+            (default: 8080) 
+          </li>
+        </ul>
+        <h2>WSGI</h2>
+        <pre><em>$</em> pyxer serve </pre>
+        <h2>Paster</h2>
+        <p>Options:</p>
+        <ul>
+          <li>
+            <code>--reload</code>
+            XXX
+          </li>
+        </ul>
+        <p>With the virtual machine: </p>
+        <pre><em>$</em> xpaster serve --reload
+</pre>
+        <p>Without the virtual machine: </p>
+        <pre><em>$</em> paster serve development.ini</pre>
+        <h2>Google App Engine</h2>
+        <pre><em>$</em> xgae serve</pre>
+      </div>
+      <div class="section">
+        <h1>Utilities</h1>
+        <h2>Using reCaptcha</h2>
+        <p>
+          To make websites safe against abuse Pyxer integrates support for <a href="http://www.recaptcha.net" target="_blank">reCaptcha</a>. You have to register your web sites URL for free there to get a private and public key. To use them see the following demo: 
+        </p>
+        <pre>from pyxer import recaptcha
+	
+CAPTCHA_PUBLIC = "XXX"
+CAPTCHA_PRIVATE = "XXX"
+
+@expose
+def myform(**kw):
+    # This creates the HTML code for the captcha input field
+    c.captcha = recaptcha.html(CAPTCHA_PUBLIC)
+    # Do some more form stuff here
+    pass
+    # Test if the captcha has been correct
+    if recaptcha.test(CAPTCHA_PRIVATE):
+        # Do something like storing the data into the database
+        pass
+        # After success jump to another page
+        return redirect("success_info")</pre>
+        <p>
+          The corresponding template 
+          <code>myform.html</code>
+          could look like this:
+        </p>
+        <pre>&lt;form action=&quot;&quot;&gt;
+  &lt;!-- add more input fields here --&gt;
+  $c.captcha
+  &lt;input type=&quot;submit&quot; /&gt;
+&lt;/form&gt;</pre>
+        <h2>Date, time and time zone</h2>
+        <p>
+          Handling of timezones is tricky in Python and on GAE. Therefore I will give a little introduction how this can be done quite easy. First you should install <a href="http://pytz.sourceforge.net/">pytz</a>
+          like this: 
+        </p>
+        <pre>$ pyxer vm
+(vm)$ easy_install pytz</pre>
+        <p>If you want to show a datetime from  Googles datastore you can now do like this in your templates:</p>
+        <pre>Local time ${h.strftime(entry.added, '%H:%M', 'Europe/Berlin')}</pre>
+        <h2>Image upload</h2>
+        <p>Simple upload GAE:</p>
+        <pre>@expose<br />def upload(image=None):
+    if image is not None:
+        Images(image=db.Blob(image.file.read())).put()</pre>
+        <p>Simple out:</p>
+        <pre>@expose
+def show():
+    image = Images.all().get() #???<br />    if image.image:<br />        response.headers['Content-Type'] = 'image/jpeg'<br />        response.body_file.write(image.image)<br />    return &quot;NO IMAGE&quot;</pre>
+      </div>
+      <div class="section">
+        <h1>Appendix</h1>
+        <h2>Reserved names </h2>
+        <ul>
+          <li>
+            <code>index</code>: Name of the root controller
+          </li>
+          <li>
+            <code>default</code>: Name of the collecting controller
+          </li>
+          <li>
+            <code>router</code>: Name of the routing object
+          </li>
+          <li>
+            <code>session</code>: Session 
+          </li>
+          <li>
+            <code>req</code>, 
+            <code>request</code>
+          </li>
+          <li>
+            <code>resp</code>, 
+            <code>response</code>
+          </li>
+          <li>
+            <code>cache</code>
+          </li>
+          <li>
+            <code>c</code>
+          </li>
+          <li>
+            <code>g</code>
+          </li>
+          <li>
+            <code>h</code>
+          </li>
+          <li>
+            <code>config</code>
+          </li>
+        </ul>
+        <h2>Links</h2>
+        <ol>
+          <li><a href="http://code.google.com/p/pyxer/">http://code.google.com/p/pyxer/</a>[Pyxer Project  Homepage] </li>
+        </ol>
+      </div>
+      <div id="footer">
+        Visit the Pyxer open source project at <a href="http://code.google.com/p/pyxer/">http://code.google.com/p/pyxer/</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+TODO
+====
+
+- Automatic update of Pyxer installation
+- Introduce "lib" directory for Python modules like "base.py", "globals.py"
+  or "helpers.py" like in Pylons
+- Let the user access the config file
+
+mod_python:
+- Solution for logging
+- Subpaths are not supported yet
+
+Templating
+- Let the user easier choose the templating machine
+- CDATA does not work
+- Bug in Genshi
+- "extends" and "match" don't work
+- Internationalization
+- <!DOCTYPE
+- <script><!-- comments do not escape the right way
+- <!--! has to be stripped
+
+Future
+- Full integration into Eclipse/PyDev
+- Windows/Mac/Linux native tool placed in the Systray/Menu/Dock
+
+- h.url should also work in layout templates
+- Fallback for not existent variables in templates

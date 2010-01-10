@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" py:layout="load('../layout.html')">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Wiki</title>
+    </head>
+    <body>
+    	
+		<a py:attrs="dict(href=c.url('edit', path=c.entry.path))" href="#">Edit</a>
+		|
+		<a py:attrs="dict(href=c.url('edit'))" href="#">New</a>
+		
+		<hr />
+		
+		<h1 py:content="c.entry.title">Title</h1>
+		
+		<div py:content="HTML(c.entry.body)">
+		 	Body 
+		</div>
+        
+		<hr />
+		
+		<p><strong>All entries:</strong></p>
+		
+		<ol>
+			<li py:for="path in c.all"><a href="${c.url('content', path)}">$path</a></li>
+		</ol>
+		
+    </body>
+</html>

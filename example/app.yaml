@@ -1,0 +1,35 @@
+application: pyxer
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+#- url: /res/.*
+#  script: $PYTHON_LIB/google/appengine/ext/zipserve
+- url: /docs/(.*)
+  static_files: docs/\1
+  upload: docs/(.*)                                    
+- url: /(.*\.(js|css|png|jpg|gif|ico))
+  static_files: public/\1
+  upload: public/(.*\.(js|css|png|jpg|gif|ico))
+- url: .*
+  script: pyxer-app.py
+
+skip_files: |
+ ^(
+ (.*/)?(
+ (.*\.exe)|
+ (.*\.so)|
+ (.*\.so)|
+ (.*\.bat)|
+ (.*\.pyd)|
+ (app\.yaml)|
+ (app\.yml)|
+ (index\.yaml)|
+ (index\.yml)|
+ (#.*#)|
+ (.*~)|
+ (.*\.py[co])|
+ (.*/RCS/.*)|
+ (\..*)
+ ))$
