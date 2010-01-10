@@ -3,7 +3,8 @@ CHANGELOG
 
 Version 0.7.3, 2009-07-xxxx
 
-- xxxx
+- FIX: STAGE variable was not correct after GAE 1.3 update
+- Arguments are now always unicode
 
 Version 0.7.2, 2009-07-20
 
