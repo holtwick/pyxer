@@ -147,7 +147,7 @@ def make_app(global_conf={}, **app_conf):
         SessionMiddleware = beaker.middleware.SessionMiddleware
         log.debug("Beaker successfully loaded")
     except ImportError:
-        log.warning("Beaker NOT loaded")
+        log.debug("Beaker NOT loaded")
         
     conf = AttrDict(pyxer={
         "session": "",

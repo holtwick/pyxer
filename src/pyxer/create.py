@@ -170,9 +170,9 @@ def self_setup(opt, root = None):
     
     # If the directory does not exist we need to install the basic stuff    
     if not os.path.isdir(site_packages):
-        install_package(root, 'paste')
         install_package(root, 'setuptools')
         install_package(root, 'beaker')
+        install_package(root, 'paste')
     
     # Remove old installation 
     pyxer_dir = os.path.join(site_packages, "pyxer")
