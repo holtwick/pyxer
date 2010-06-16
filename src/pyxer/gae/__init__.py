@@ -114,7 +114,8 @@ def upload(opt, root=None):
     elif sys.platform == "darwin":
         
         if call_subprocess([
-            "appcfg.py"] + 
+            "python2.5",
+            "/usr/local/google_appengine/appcfg.py"] + 
             options + [
             "update",
             root
