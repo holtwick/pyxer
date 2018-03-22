@@ -1,3 +1,7 @@
+THIS PROJECT IS DISCONTINUED!
+
+-----
+
 For more information visit:
 
   http://code.google.com/p/pyxer/
